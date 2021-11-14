@@ -1,24 +1,4 @@
-# caps
-
-Code Academy Parcel Service caps for short is delivery management system
-
-## Documentation
-
-uml:
-![uml](./assets/11.drawio.png)
-![11](./assets/11.jpg)
-
-## JSDoc
-
-```js
-/**
- *
- * @param {payload:"store": string,"orderId": string,"customer": string,"address": string}
- * logOrder when order is delivered
- */
-const handler = (payload) => {
-  console.log(`Thank you, ${payload.customer}\n`);
-};
+const Event = require("../../HUB");
 /**
  *
  * @param {payload:"store": string,"orderId": string,"customer": string,"address": string} payload
@@ -33,4 +13,6 @@ const handler = (payload) => {
   console.log(`DRIVER: delivered ${payload.orderId}\n`);
   Event.emit("delivered", payload);
 };
-```
+
+Event.on("pickup", handler);
+module.exports = handler;
