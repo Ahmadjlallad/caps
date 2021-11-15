@@ -1,5 +1,5 @@
 const driver = require("../modules/driver/driver");
-const endor = require("../modules/vendor/endor");
+const vendor = require("../modules/vendor/vendor");
 describe("", () => {
   let con;
   beforeEach(() => {
@@ -9,16 +9,19 @@ describe("", () => {
     con = null;
   });
   test("should call the console.log for driver", () => {
-    driver({
-      store: "Kuvalis - Terry",
-      orderId: "Handcrafted Soft Shirt",
-      customer: "Mr. Lynn Blick",
-      address: "Commerce City 96034 Hand Corners",
-    });
+    driver(
+      {
+        store: "Kuvalis - Terry",
+        orderId: "Handcrafted Soft Shirt",
+        customer: "Mr. Lynn Blick",
+        address: "Commerce City 96034 Hand Corners",
+      },
+      { emit: () => {} }
+    );
     expect(con).toHaveBeenCalled();
   });
   test("should call the console.log for endor", () => {
-    endor({
+    vendor({
       store: "Kuvalis - Terry",
       orderId: "Handcrafted Soft Shirt",
       customer: "Mr. Lynn Blick",

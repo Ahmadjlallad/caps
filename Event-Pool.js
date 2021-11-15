@@ -1,25 +1,25 @@
-const Event = require("./HUB");
-const faker = require("faker");
-const e = require("./e");
+const caps = require("socket.io")(3000);
 
-require("./modules/vendor/endor");
-require("./modules/driver/driver");
-
-const event = [...Event.eventNames(), "in-transit"];
-event.forEach((e) => {
-  Event.prependListener(e, (p) => {
+caps.on("connection", (socket) => {
+  socket.onAny((eventName, p) => {
     console.log(
       ` EVENT { 
-   "event": ${e},
+   "event": ${eventName},
    "time": ${new Date().toISOString()},
    "payload": ${JSON.stringify(p).replaceAll(",", ",\n" + " ".padStart(15))}
               }\n`
     );
   });
-});
-Event.emit("pickup", {
-  store: faker.company.companyName(),
-  orderId: faker.commerce.productName(),
-  customer: faker.name.findName(),
-  address: `${faker.address.cityName()} ${faker.address.streetAddress()}`,
+  socket.on("join-room", (room) => {
+    socket.join(room);
+  });
+  socket.on("pickup", (data) => {
+    caps.emit("pickup", data);
+  });
+  socket.on("in-transit", (p) => {
+    caps.to(p.store).emit("in-transit", p);
+  });
+  socket.on("delivered", (p) => {
+    caps.to(p.store).emit("delivered", p);
+  });
 });
