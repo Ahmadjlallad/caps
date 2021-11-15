@@ -1,5 +1,5 @@
-const driver = require("../modules/driver/driver");
-const vendor = require("../modules/vendor/vendor");
+const driver = require("../modules/helpers/driver");
+const vendor = require("../modules/helpers/vindor");
 describe("", () => {
   let con;
   beforeEach(() => {
@@ -8,7 +8,7 @@ describe("", () => {
   afterEach(() => {
     con = null;
   });
-  test("should call the console.log for driver", () => {
+  test("should call the console.log for driver", async () => {
     driver(
       {
         store: "Kuvalis - Terry",
@@ -20,7 +20,7 @@ describe("", () => {
     );
     expect(con).toHaveBeenCalled();
   });
-  test("should call the console.log for endor", () => {
+  test("should call the console.log for vendor", () => {
     vendor({
       store: "Kuvalis - Terry",
       orderId: "Handcrafted Soft Shirt",
