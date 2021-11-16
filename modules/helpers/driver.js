@@ -8,9 +8,10 @@
  * log
  */
 const handler = (payload, socket) => {
-  console.log(`DRIVER: picked up ${payload.orderId}.\n`);
+  console.log(`DRIVER: picked up ${payload.payload.orderId}.\n`);
   socket.emit("in-transit", payload);
-  console.log(`DRIVER: delivered ${payload.orderId}\n`);
+  console.log(`DRIVER: delivered ${payload.payload.orderId}\n`);
   socket.emit("delivered", payload);
+  socket.emit("received", { ...payload, event: "Driver" });
 };
 module.exports = handler;
