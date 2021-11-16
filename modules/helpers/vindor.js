@@ -4,6 +4,7 @@
  * logOrder when order is delivered
  */
 const handler = (payload) => {
-  console.log(`Thank you, ${payload.customer}\n`);
+  console.log(payload);
+  console.log(`Thank you, ${payload.payload.customer}\n`);
 };
 module.exports = handler;

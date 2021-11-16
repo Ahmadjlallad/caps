@@ -3,17 +3,14 @@ const socket = io("http://localhost:3000");
 const faker = require("faker");
 const handler = require("../helpers/vindor");
 socket.connect();
+
 socket.on("connect", () => {
-  const store = faker.company.companyName();
+  const store = `acme - widgets`;
   socket.emit("join-room", store);
-  socket.emit("pickup", {
-    store,
-    orderId: faker.commerce.productName(),
-    customer: faker.name.findName(),
-    address: `${faker.address.cityName()} ${faker.address.streetAddress()}`,
-  });
+  socket.emit("getAll", store);
 });
 socket.on("delivered", (p) => {
+  console.log("delivered");
   handler(p);
-  process.exit();
+  socket.emit("received", { ...p, event: "Vendor" });
 });
